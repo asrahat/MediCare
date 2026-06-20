@@ -29,9 +29,9 @@ export default function Navbar() {
 
     const handleLogout = async () => {
         await authClient.signOut();
-        toast('log out Successfull!!')
-        router.push("/");
+        toast('log out Successfull!!');
         window.location.reload()
+        router.push("/login");
     };
 
     const isActive = (path) =>
