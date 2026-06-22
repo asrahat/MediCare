@@ -70,6 +70,10 @@ export default function Navbar() {
                             Find Doctors
                             {isActive("/doctors") && <span className="absolute left-0 -bottom-2 w-full h-[2px] bg-cyan-400 rounded-full" />}
                         </Link>
+                        {/* <Link href="/doctors/:id" className={linkClass("/doctors")}>
+                             Doctors Details
+                            {isActive("/doctors") && <span className="absolute left-0 -bottom-2 w-full h-[2px] bg-cyan-400 rounded-full" />}
+                        </Link> */}
 
                         <Link href="/about" className={linkClass("/about")}>
                             About Us
