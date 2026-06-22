@@ -1,5 +1,7 @@
 import Banner from "@/components/Banner";
+import Footer from "@/components/Footer";
 import MedicalSpecializations from "@/components/MedicalSpecializations";
+import WhyChooseUs from "@/components/WhyChooseUs";
 import Image from "next/image";
 
 export default function Home() {
@@ -8,6 +10,7 @@ export default function Home() {
 
         <Banner></Banner>
         <MedicalSpecializations></MedicalSpecializations>
+        <WhyChooseUs></WhyChooseUs>
     </div>
   );
 }
