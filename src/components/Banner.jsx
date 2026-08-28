@@ -73,15 +73,16 @@ export default function Banner() {
 
             {/* Structured Hero Actions (CTAs) */}
             <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-4 pt-2">
+              <Link href="/doctors">
               <Button
-                as={Link}
-                href="/find-doctors"
+               
                 size="lg"
                 className="bg-teal-600 hover:bg-teal-700 dark:bg-teal-500 dark:hover:bg-teal-600 text-white font-bold text-sm shadow-xl shadow-teal-500/10 hover:shadow-teal-500/20 px-8 h-12 rounded-xl transition-all duration-200"
                 startContent={<Calendar className="h-4 w-4 shrink-0" />}
               >
                 Book Appointment
               </Button>
+              </Link>
               
               <Button
                 as={Link}

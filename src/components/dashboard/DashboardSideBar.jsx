@@ -144,7 +144,7 @@ const adminMenu = [
         {/* Brand / Logo */}
         <div className="px-6 py-5 border-b border-white/5">
           {/* <Logo /> */}
-          Medicare
+          <Link href="/" className="text-2xl font-bold tracking-tight">MediCare</Link>
         </div>
 
         {/* User Profile */}
