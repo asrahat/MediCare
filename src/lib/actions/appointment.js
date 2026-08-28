@@ -26,3 +26,29 @@ export const getAppointments = async (userId) => {
     throw error;
   }
 };
+
+// ---------
+export const getAppointment = async (id) => {
+  try {
+    const res = await fetch(
+      `${SERVER_URL}/appointments/${id}`,
+      {
+        method: "GET",
+        cache: "no-store",
+      }
+    );
+
+    const result = await res.json();
+
+    if (!res.ok) {
+      throw new Error(
+        result?.message || "Failed to fetch appointment"
+      );
+    }
+
+    return result;
+  } catch (error) {
+    console.error("Get appointment error:", error);
+    throw error;
+  }
+};
