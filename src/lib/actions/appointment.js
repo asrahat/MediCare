@@ -110,3 +110,4 @@ export const rescheduleAppointment = async (id, data) => {
     throw error;
   }
 };
+// ---------
