@@ -52,3 +52,32 @@ export const getAppointment = async (id) => {
     throw error;
   }
 };
+
+// ---------
+export const createAppointment = async (data) => {
+  try {
+    const res = await fetch(
+      `${SERVER_URL}/appointments`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
+
+    const result = await res.json();
+
+    if (!res.ok) {
+      throw new Error(
+        result?.message || "Failed to create appointment"
+      );
+    }
+
+    return result;
+  } catch (error) {
+    console.error("Create appointment error:", error);
+    throw error;
+  }
+};
