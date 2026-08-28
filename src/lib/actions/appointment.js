@@ -81,3 +81,32 @@ export const createAppointment = async (data) => {
     throw error;
   }
 };
+
+// ---------
+export const rescheduleAppointment = async (id, data) => {
+  try {
+    const res = await fetch(
+      `${SERVER_URL}/appointments/${id}/reschedule`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
+
+    const result = await res.json();
+
+    if (!res.ok) {
+      throw new Error(
+        result?.message || "Failed to reschedule appointment"
+      );
+    }
+
+    return result;
+  } catch (error) {
+    console.error("Reschedule appointment error:", error);
+    throw error;
+  }
+};
