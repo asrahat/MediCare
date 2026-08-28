@@ -173,11 +173,22 @@ const Page = async ({ params }) => {
           </div>
 
           
-          <Link href={`/doctors/${id}/appointment`} >
-           <Button className="w-full cursor-pointer bg-green-600 hover:bg-green-500 text-white font-semibold py-4 rounded-xl transition">
+          
+
+
+
+          <form action="/api/payment" method="POST">
+            <input type='hidden' value={doctor.doctorName}  name="doctorName" placeholder="Doctor Name" />
+            <input type='hidden' value={doctor.consultationFee}  name="consultationFee" placeholder="Consultation Fee" />
+            <input type='hidden' value={doctor.availableSlots}  name="availableSlots" placeholder="Available Slots" />
+            <input type='hidden' value={doctor.date}  name="date" placeholder="Date" />
+           
+        
+           <Button type="submit" className="w-full cursor-pointer bg-green-600 hover:bg-green-500 text-white font-semibold py-4 rounded-xl transition">
              Book Appointment (${doctor.consultationFee})
            </Button>
-          </Link >
+         
+          </form>
 
         </aside>
 
