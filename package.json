@@ -17,6 +17,7 @@
     "better-auth": "^1.6.19",
     "framer-motion": "^12.40.0",
     "kysely": "^0.29.2",
+    "lucide-react": "^1.35.0",
     "mongodb": "^7.3.0",
     "next": "^16.2.9",
     "react": "19.2.4",

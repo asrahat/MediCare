@@ -2,10 +2,10 @@ import DoctorListingContainer from "@/components/doctors/DoctorListingContainer"
 import { getDoctors } from "@/lib/api/doctors";
 
 const DoctorsPage = async ({searchParams}) => {
-      // ✅ FIX 1: unwrap safely
+ 
   const filters = (await searchParams) || {};
 
-  // ✅ Clean object (ONLY string values allowed in URLSearchParams)
+
   const cleanFilters = {
     search: filters.search || "",
     specialization: filters.specialization || "",
@@ -15,7 +15,7 @@ const DoctorsPage = async ({searchParams}) => {
     page: filters.page || "1",
   };
 
-  // ✅ FIX 2: only pass safe string values
+
   const queryString = new URLSearchParams(cleanFilters).toString();
 
   const { doctors, total } = await getDoctors(queryString);
@@ -39,7 +39,7 @@ const DoctorsPage = async ({searchParams}) => {
       />
 
     </div>
-    );
+    ); 
 };
 
 export default DoctorsPage;

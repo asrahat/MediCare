@@ -1,7 +1,6 @@
 import { serverFetch } from "../core/server";
 
 export const getDoctors = async (queryString = "") => {
-
   const url = queryString
     ? `/api/doctors?${queryString}`
     : `/api/doctors`;
@@ -9,7 +8,8 @@ export const getDoctors = async (queryString = "") => {
   return serverFetch(url);
 };
 
-
 export const getDoctorById = async (doctorId) => {
-  return serverFetch(`/api/doctors/${doctorId}`);
+  const result = await serverFetch(`/api/doctors/${doctorId}`);
+
+  return result?.data || null;
 };
