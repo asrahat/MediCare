@@ -9,7 +9,12 @@ export const getDoctors = async (queryString = "") => {
 };
 
 export const getDoctorById = async (doctorId) => {
-  const result = await serverFetch(`/api/doctors/${doctorId}`);
+  console.log("getDoctorById received:", doctorId);
 
-  return result?.data || null;
+  if (!doctorId) {
+    console.error("Doctor ID is missing!");
+    return null;
+  }
+
+  return serverFetch(`/api/doctors/${doctorId}`);
 };

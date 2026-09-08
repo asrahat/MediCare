@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@better-auth/mongo-adapter": "^1.6.19",
-    "@gravity-ui/icons": "^2.18.0",
     "@heroui/react": "^3.2.1",
     "@heroui/styles": "^3.2.1",
     "@stripe/stripe-js": "^9.14.0",
@@ -29,6 +28,7 @@
     "stripe": "^22.5.0"
   },
   "devDependencies": {
+    "@gravity-ui/icons": "^2.22.0",
     "@tailwindcss/postcss": "^4",
     "eslint": "^9",
     "eslint-config-next": "16.2.9",

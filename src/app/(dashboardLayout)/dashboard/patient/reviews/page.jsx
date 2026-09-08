@@ -1,11 +1,9 @@
-import React from 'react';
+import ReviewsSection from "@/components/ReviewsSection";
 
-const PatientReviews = () => {
-    return (
-        <div>
-            Patient Reviews
-        </div>
-    );
-};
-
-export default PatientReviews;
+export default function ReviewsPage() {
+  return (
+    <main>
+      <ReviewsSection />
+    </main>
+  );
+}

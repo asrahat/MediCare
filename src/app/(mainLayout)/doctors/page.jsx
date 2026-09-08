@@ -19,6 +19,7 @@ const DoctorsPage = async ({searchParams}) => {
   const queryString = new URLSearchParams(cleanFilters).toString();
 
   const { doctors, total } = await getDoctors(queryString);
+console.log(doctors, 'doctors');
 
     return (
         <div className="w-full min-h-screen bg-zinc-950 p-6 md:p-12 text-white">
