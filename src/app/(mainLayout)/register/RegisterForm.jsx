@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from "next/link";
@@ -18,79 +19,91 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { uploadImage } from "@/utils/uploadImage";
 import { toast } from "react-toastify";
 import { useEffect } from "react";
+
 const RegisterForm = ({ redirectTo = "/" }) => {
-      const router = useRouter();
-      const searchParams = useSearchParams();
-    
-      const callbackUrl = searchParams.get("callbackUrl") || "/";
-    
-      const {
-        control,
-        handleSubmit,
-        formState: { errors },
-      } = useForm({
-        defaultValues: {
-          name: "",
-          email: "",
-          password: "",
-          role: "patient",
-          image: null,
-        },
-      });
-    
-      useEffect(() => {
-        const checkSession = async () => {
-          try {
-            const session = await authClient.getSession();
-    
-            if (session?.data?.user) {
-              router.replace(callbackUrl);
-            }
-          } catch (error) {
-            console.error(error);
-          }
-        };
-    
-        checkSession();
-      }, [router, callbackUrl]);
-    
-      const onSubmit = async (data) => {
-        try {
-          const imageFile = data.image?.[0];
-          let imageUrl = "";
-    
-          if (imageFile) {
-            imageUrl = await uploadImage(imageFile);
-          }
-    
-          const { data: signUpData, error: signUpError } =
-            await authClient.signUp.email({
-              email: data.email,
-              password: data.password,
-              name: data.name,
-              image: imageUrl,
-              role: data.role,
-            });
-    
-          if (signUpError) {
-            toast.error(signUpError.message || "Registration failed");
-            return;
-          }
-    
-          toast.success("Account created successfully!");
-    
-          setTimeout(() => {
-            router.push(redirectTo);
-            router.refresh();
-          }, 500);
-        } catch (err) {
-          console.error(err);
-          toast.error("Something went wrong");
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const callbackUrl = searchParams.get("callbackUrl") || "/";
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      name: "",
+      email: "",
+      password: "",
+      role: "patient",
+      image: null,
+    },
+  });
+
+  useEffect(() => {
+    const checkSession = async () => {
+      try {
+        const session = await authClient.getSession();
+
+        if (session?.data?.user) {
+          router.replace(callbackUrl);
         }
-      };
-    return (
-           <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 px-4">
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    checkSession();
+  }, [router, callbackUrl]);
+
+  const onSubmit = async (data) => {
+    try {
+      const imageFile = data.image?.[0];
+      let imageUrl = "";
+
+      if (imageFile) {
+        imageUrl = await uploadImage(imageFile);
+      }
+
+      const { data: signUpData, error: signUpError } =
+        await authClient.signUp.email({
+          email: data.email,
+          password: data.password,
+          name: data.name,
+          image: imageUrl,
+
+          // IMPORTANT:
+          // Do not send `role`.
+          // Send the selected role as a custom field.
+          accountType: data.role,
+        });
+
+      if (signUpError) {
+        console.error("Registration error:", signUpError);
+
+        toast.error(
+          signUpError.message || "Registration failed"
+        );
+
+        return;
+      }
+
+      toast.success("Account created successfully!");
+
+      setTimeout(() => {
+        router.push(redirectTo);
+        router.refresh();
+      }, 500);
+    } catch (err) {
+      console.error(err);
+      toast.error("Something went wrong");
+    }
+  };
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 px-4">
       <div className="absolute top-[-120px] left-[-120px] w-[400px] h-[400px] bg-sky-500/20 blur-[120px] rounded-full" />
+
       <div className="absolute bottom-[-120px] right-[-120px] w-[400px] h-[400px] bg-cyan-500/20 blur-[120px] rounded-full" />
 
       <div className="w-full max-w-xl relative">
@@ -110,7 +123,10 @@ const RegisterForm = ({ redirectTo = "/" }) => {
           </CardHeader>
 
           <CardBody className="px-8 pb-10">
-            <Form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+            <Form
+              onSubmit={handleSubmit(onSubmit)}
+              className="space-y-5"
+            >
               <Controller
                 name="name"
                 control={control}
@@ -193,7 +209,9 @@ const RegisterForm = ({ redirectTo = "/" }) => {
                     <input
                       type="file"
                       accept="image/*"
-                      onChange={(e) => field.onChange(e.target.files)}
+                      onChange={(e) =>
+                        field.onChange(e.target.files)
+                      }
                       className="w-full h-14 px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-white/70 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:bg-cyan-500/20 file:text-cyan-300 hover:border-cyan-400/40 transition"
                     />
                   )}
@@ -227,9 +245,11 @@ const RegisterForm = ({ redirectTo = "/" }) => {
                           }`}
                         >
                           <div className="text-3xl">👤</div>
+
                           <p className="mt-2 font-semibold text-white">
                             Patient
                           </p>
+
                           <p className="text-xs text-white/50">
                             Book appointments
                           </p>
@@ -253,9 +273,11 @@ const RegisterForm = ({ redirectTo = "/" }) => {
                           }`}
                         >
                           <div className="text-3xl">👨‍⚕️</div>
+
                           <p className="mt-2 font-semibold text-white">
                             Doctor
                           </p>
+
                           <p className="text-xs text-white/50">
                             Provide care
                           </p>
@@ -276,16 +298,20 @@ const RegisterForm = ({ redirectTo = "/" }) => {
 
             <div className="flex items-center my-7">
               <div className="flex-1 h-px bg-white/10" />
+
               <span className="px-4 text-xs text-white/40">
                 or continue with
               </span>
+
               <div className="flex-1 h-px bg-white/10" />
             </div>
 
             <Button
               variant="bordered"
               className="w-full h-14 rounded-2xl border border-white/10 bg-white/5 text-white"
-              startContent={<FaGoogle className="text-red-400" />}
+              startContent={
+                <FaGoogle className="text-red-400" />
+              }
             >
               Continue with Google
             </Button>
@@ -293,7 +319,9 @@ const RegisterForm = ({ redirectTo = "/" }) => {
             <p className="text-center text-sm text-white/50 mt-6">
               Already have an account?{" "}
               <Link
-                href={`/login?redirect=${encodeURIComponent(redirectTo)}`}
+                href={`/login?redirect=${encodeURIComponent(
+                  redirectTo
+                )}`}
                 className="text-cyan-400 hover:text-cyan-300 font-medium"
               >
                 Sign in
@@ -303,7 +331,8 @@ const RegisterForm = ({ redirectTo = "/" }) => {
         </Card>
       </div>
     </div>
-    );
+  );
 };
 
 export default RegisterForm;
+
