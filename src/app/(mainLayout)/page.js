@@ -1,6 +1,7 @@
 import Banner from "@/components/Banner";
 import Footer from "@/components/Footer";
 import MedicalSpecializations from "@/components/MedicalSpecializations";
+import ReviewsSection from "@/components/ReviewsSection";
 import WhyChooseUs from "@/components/WhyChooseUs";
 import Image from "next/image";
 

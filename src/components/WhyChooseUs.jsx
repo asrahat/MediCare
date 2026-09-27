@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { Card } from "@heroui/react";
 import {
   FaUserCheck,
-  FaHouseMedicalCircleCheck ,
+  FaHouseMedicalCircleCheck,
   FaFilePrescription,
   FaTv,
 } from "react-icons/fa6";
@@ -23,7 +23,7 @@ const advantages = [
     title: "Bank-Grade Health Data Security",
     description:
       "Your Electronic Medical Records (EMR) and consultation logs are safeguarded by strict end-to-end encryption protocols.",
-    icon: FaHouseMedicalCircleCheck ,
+    icon: FaHouseMedicalCircleCheck,
     color:
       "bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-200/40 dark:border-blue-900/30",
   },
@@ -59,35 +59,39 @@ export default function WhyChooseUs() {
     visible: {
       opacity: 1,
       x: 0,
-      transition: { type: "spring", stiffness: 90, damping: 14 },
+      transition: {
+        type: "spring",
+        stiffness: 90,
+        damping: 14,
+      },
     },
   };
 
   return (
-    <section className="py-20 bg-white dark:bg-slate-950 border-t border-slate-100 dark:border-slate-900/40 transition-colors duration-300">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-          {/* LEFT SIDE: VALUE PROPOSITION ARCHITECTURE */}
-          <div className="lg:col-span-5 lg:sticky lg:top-24 space-y-5">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200/60 dark:border-emerald-900/40">
-              <span className="text-[10px] font-bold text-emerald-700 dark:text-emerald-400 uppercase tracking-wider">
+    <section className="w-full border-t border-slate-100 bg-white py-16 transition-colors duration-300 dark:border-slate-900/40 dark:bg-slate-950 lg:py-20">
+      <div className="w-11/12 mx-auto px-5 sm:px-8 lg:px-12 xl:px-16 2xl:px-20">
+        <div className="grid w-full grid-cols-1 items-start gap-10 lg:grid-cols-12 lg:gap-12 xl:gap-16">
+          {/* LEFT SIDE */}
+          <div className="space-y-5 lg:sticky lg:top-24 lg:col-span-5">
+            <div className="inline-flex items-center gap-1.5 rounded-full border border-emerald-200/60 bg-emerald-50 px-3 py-1 dark:border-emerald-900/40 dark:bg-emerald-950/40">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400">
                 The Platform Advantage
               </span>
             </div>
 
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight">
+            <h2 className="text-3xl font-extrabold leading-tight tracking-tight text-slate-900 dark:text-white sm:text-4xl lg:text-5xl">
               Why Global Patients Choose MediCare Connect
             </h2>
 
-            <p className="text-base text-slate-600 dark:text-slate-400 leading-relaxed font-normal">
+            <p className="max-w-2xl text-base font-normal leading-relaxed text-slate-600 dark:text-slate-400">
               We bridge the physical limitations of legacy clinical
               infrastructure. By implementing rigorous verification matrices and
               low-latency network technology, we deliver premium, immediate
               clinical consultations without compromise.
             </p>
 
-            <blockquote className="border-l-4 border-teal-500 bg-slate-50 dark:bg-slate-900 p-4 rounded-r-xl">
-              <p className="text-xs italic text-slate-500 dark:text-slate-400 font-medium">
+            <blockquote className="rounded-r-xl border-l-4 border-teal-500 bg-slate-50 p-4 dark:bg-slate-900">
+              <p className="text-xs font-medium italic leading-relaxed text-slate-500 dark:text-slate-400">
                 Our mission is to replace clinical friction with immediate,
                 reliable care. We build tools that treat time with the same
                 urgency as health.
@@ -95,33 +99,39 @@ export default function WhyChooseUs() {
             </blockquote>
           </div>
 
-          {/* RIGHT SIDE: ADVANTAGES CARD MATRIX */}
+          {/* RIGHT SIDE */}
           <motion.div
-            className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-6"
+            className="grid w-full grid-cols-1 gap-5 sm:grid-cols-2 lg:col-span-7 lg:gap-6"
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-50px" }}
           >
-            {advantages.map((adv, index) => {
+            {advantages.map((adv) => {
               const IconComponent = adv.icon;
+
               return (
-                <motion.div key={index} variants={itemVariants}>
-                  <Card className="h-full border border-slate-100 dark:border-slate-800 bg-slate-50/40 dark:bg-slate-900/30 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300">
-                    <div className="p-6 space-y-4">
-                      {/* Custom Dynamic Icon Frame */}
+                <motion.div
+                  key={adv.title}
+                  variants={itemVariants}
+                  className="h-full"
+                >
+                  <Card className="h-full rounded-2xl border border-slate-100 bg-slate-50/40 shadow-sm transition-all duration-300 hover:shadow-md dark:border-slate-800 dark:bg-slate-900/30">
+                    <div className="flex h-full flex-col p-6">
+                      {/* Icon */}
                       <div
-                        className={`w-12 h-12 rounded-xl border flex items-center justify-center shrink-0 ${adv.color}`}
+                        className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border ${adv.color}`}
                       >
                         <IconComponent className="text-lg" />
                       </div>
 
-                      {/* Header and Context Copy */}
-                      <div className="space-y-1.5">
-                        <h3 className="text-base font-bold text-slate-900 dark:text-white tracking-tight">
+                      {/* Content */}
+                      <div className="mt-4 space-y-1.5">
+                        <h3 className="text-base font-bold tracking-tight text-slate-900 dark:text-white">
                           {adv.title}
                         </h3>
-                        <p className="text-xs text-slate-500 dark:text-slate-400 font-normal leading-relaxed">
+
+                        <p className="text-xs font-normal leading-relaxed text-slate-500 dark:text-slate-400 sm:text-sm">
                           {adv.description}
                         </p>
                       </div>

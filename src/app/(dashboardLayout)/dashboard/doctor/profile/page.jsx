@@ -1,11 +1,5 @@
-import React from 'react';
+import DoctorProfile from "@/components/doctors/DoctorProfile";
 
-const ProfileManagement = () => {
-    return (
-        <div>
-            Profile Management
-        </div>
-    );
-};
-
-export default ProfileManagement;
+export default function DoctorProfilePage() {
+  return <DoctorProfile />;
+}

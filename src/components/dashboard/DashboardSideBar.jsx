@@ -1,223 +1,330 @@
-// import Logo from "@/components/Logo";
-import { useSession } from "@/lib/auth-client";
+
+"use client";
+
+import { useState } from "react";
+import { useSession, signOut } from "@/lib/auth-client";
 import Image from "next/image";
 import Link from "next/link";
-import { FaBuilding, FaCalendarAlt, FaHistory, FaHome, FaPlus, FaSignOutAlt, FaTicketAlt, FaUserCircle, FaUsers, FaUserShield, FaChartPie,
+
+import {
+  FaHome,
+  FaSignOutAlt,
+  FaUsers,
+  FaChartPie,
   FaCalendarCheck,
   FaClock,
   FaFilePrescription,
   FaUserMd,
   FaCreditCard,
   FaStar,
-  FaHospital,
   FaMoneyBillWave,
-  FaChartLine} from "react-icons/fa";
+  FaChartLine,
+} from "react-icons/fa";
 
-
-
+import { Menu, X } from "lucide-react";
 
 const DashboardSideBar = () => {
   const { data: session } = useSession();
-  const handleLogout = () => {
 
-  }
-
-
-  const doctorMenu = [
-  {
-    key: "overview",
-    label: "Overview",
-    icon: FaChartPie,
-    href: "/dashboard/doctor",
-  },
-  {
-    key: "schedule",
-    label: "Manage Schedule",
-    icon: FaClock,
-    href: "/dashboard/doctor/schedule",
-  },
-  {
-    key: "appointments",
-    label: "Appointment Requests",
-    icon: FaCalendarCheck,
-    href: "/dashboard/doctor/appointments",
-  },
-  {
-    key: "prescriptions",
-    label: "Prescription Management",
-    icon: FaFilePrescription,
-    href: "/dashboard/doctor/prescriptions",
-  },
-  {
-    key: "profile",
-    label: "Profile Management",
-    icon: FaUserMd,
-    href: "/dashboard/doctor/profile",
-  },
-];
-
-const patientMenu = [
-  {
-    key: "overview",
-    label: "Overview",
-    icon: FaChartPie,
-    href: "/dashboard/patient",
-  },
-  {
-    key: "appointments",
-    label: "My Appointments",
-    icon: FaCalendarCheck,
-    href: "/dashboard/patient/appointments",
-  },
-  {
-    key: "payments",
-    label: "Payment History",
-    icon: FaCreditCard,
-    href: "/dashboard/patient/payments",
-  },
-  {
-    key: "reviews",
-    label: "My Reviews",
-    icon: FaStar,
-    href: "/dashboard/patient/reviews",
-  },
-  {
-    key: "profile",
-    label: "Profile",
-    icon: FaUserCircle,
-    href: "/dashboard/patient/profile",
-  },
-];
-
-const adminMenu = [
-  {
-    key: "users",
-    label: "Manage Users",
-    icon: FaUsers,
-    href: "/dashboard/admin/users",
-  },
-  {
-    key: "doctors",
-    label: "Manage Doctors",
-    icon: FaUserMd,
-    href: "/dashboard/admin/doctors",
-  },
-  {
-    key: "appointments",
-    label: "Manage Appointments",
-    icon: FaCalendarCheck,
-    href: "/dashboard/admin/appointments",
-  },
-  {
-    key: "payments",
-    label: "Payment Management",
-    icon: FaMoneyBillWave,
-    href: "/dashboard/admin/payments",
-  },
-  {
-    key: "hospitals",
-    label: "Hospitals & Clinics",
-    icon: FaHospital,
-    href: "/dashboard/admin/hospitals",
-  },
-  {
-    key: "analytics",
-    label: "Analytics",
-    icon: FaChartLine,
-    href: "/dashboard/admin/analytics",
-  },
-  {
-    key: "admins",
-    label: "Admin Management",
-    icon: FaUserShield,
-    href: "/dashboard/admin/roles",
-  },
-];
+  const [isOpen, setIsOpen] = useState(false);
 
   const role = session?.user?.role;
 
-  const manuItems = role === "doctor" ? doctorMenu : role === "patient" ? patientMenu : role === "admin" ? adminMenu : null;
+  const doctorMenu = [
+    {
+      key: "overview",
+      label: "Overview",
+      icon: FaChartPie,
+      href: "/dashboard/doctor",
+    },
+    {
+      key: "schedule",
+      label: "Manage Schedule",
+      icon: FaClock,
+      href: "/dashboard/doctor/schedule",
+    },
+    {
+      key: "appointments",
+      label: "Appointment Requests",
+      icon: FaCalendarCheck,
+      href: "/dashboard/doctor/appointments",
+    },
+    {
+      key: "prescriptions",
+      label: "Prescription Management",
+      icon: FaFilePrescription,
+      href: "/dashboard/doctor/prescriptions",
+    },
+    {
+      key: "profile",
+      label: "Profile Management",
+      icon: FaUserMd,
+      href: "/dashboard/doctor/profile",
+    },
+  ];
+
+  const patientMenu = [
+    {
+      key: "overview",
+      label: "Overview",
+      icon: FaChartPie,
+      href: "/dashboard/patient",
+    },
+    {
+      key: "appointments",
+      label: "My Appointments",
+      icon: FaCalendarCheck,
+      href: "/dashboard/patient/appointments",
+    },
+    {
+      key: "payments",
+      label: "Payment History",
+      icon: FaCreditCard,
+      href: "/dashboard/patient/payments",
+    },
+    {
+      key: "reviews",
+      label: "My Reviews",
+      icon: FaStar,
+      href: "/dashboard/patient/reviews",
+    },
+    {
+      key: "profile",
+      label: "Profile",
+      icon: FaUserMd,
+      href: "/dashboard/patient/profile",
+    },
+  ];
+
+  const adminMenu = [
+    {
+      key: "users",
+      label: "Manage Users",
+      icon: FaUsers,
+      href: "/dashboard/admin/users",
+    },
+    {
+      key: "doctors",
+      label: "Manage Doctors",
+      icon: FaUserMd,
+      href: "/dashboard/admin/doctors",
+    },
+    {
+      key: "appointments",
+      label: "Manage Appointments",
+      icon: FaCalendarCheck,
+      href: "/dashboard/admin/appointments",
+    },
+    {
+      key: "payments",
+      label: "Payment Management",
+      icon: FaMoneyBillWave,
+      href: "/dashboard/admin/payments",
+    },
+    {
+      key: "analytics",
+      label: "Analytics",
+      icon: FaChartLine,
+      href: "/dashboard/admin/analytics",
+    },
+  ];
+
+  const menuItems =
+    role === "doctor"
+      ? doctorMenu
+      : role === "patient"
+      ? patientMenu
+      : role === "admin"
+      ? adminMenu
+      : [];
+
+  const closeSidebar = () => {
+    setIsOpen(false);
+  };
+
+  const handleLogout = async () => {
+    try {
+      await signOut();
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
+  };
+
+  const avatarUrl =
+    session?.user?.image ||
+    `https://ui-avatars.com/api/?name=${encodeURIComponent(
+      session?.user?.name || "User"
+    )}&background=0f766e&color=fff&bold=true`;
 
   return (
-    <aside className="w-64 h-screen border-r border-white/5">
-      <div className="h-full flex flex-col bg-slate-950/80 backdrop-blur-xl">
-        {/* Brand / Logo */}
-        <div className="px-6 py-5 border-b border-white/5">
-          {/* <Logo /> */}
-          <Link href="/" className="text-2xl font-bold tracking-tight">MediCare</Link>
-        </div>
+    <>
+      {/* =====================================================
+          MOBILE HEADER
+      ====================================================== */}
+      <header className="fixed left-0 right-0 top-0 z-40 flex h-16 items-center justify-between border-b border-white/5 bg-[#080c16]/95 px-4 backdrop-blur-xl lg:hidden">
+        <Link
+          href="/"
+          className="text-xl font-bold tracking-tight text-white"
+        >
+          Medi<span className="text-[#00C2B5]">Care</span>
+        </Link>
 
-        {/* User Profile */}
-        <div className="px-6 py-5 border-b border-white/5">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-pink-500/60 shrink-0">
-              <Image
-                width={40}
-                height={40}
-                src={session?.user?.image || `https://ui-avatars.com/api/?name=${encodeURIComponent("Jane Doe")}&background=7c3aed&color=fff&bold=true`}
-                alt="Avatar"
-                className="object-cover w-full h-full"
-              />
-            </div>
-            <div className="overflow-hidden">
-              <p className="text-white text-sm font-bold truncate leading-tight">
-                {session?.user?.name}
-              </p>
-              <span className={`text-[10px] font-bold uppercase tracking-wider ${role === "admin" ? "text-yellow-400" : role === "organizer" ? "text-indigo-400" : "text-pink-400"}`}>
-                {role}
-              </span>
+        <button
+          type="button"
+          onClick={() => setIsOpen(true)}
+          aria-label="Open dashboard menu"
+          className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-slate-300 transition hover:bg-white/10 hover:text-white"
+        >
+          <Menu size={21} />
+        </button>
+      </header>
+
+      {/* =====================================================
+          MOBILE OVERLAY
+      ====================================================== */}
+      {isOpen && (
+        <button
+          type="button"
+          aria-label="Close dashboard menu"
+          onClick={closeSidebar}
+          className="fixed inset-0 z-40 bg-black/60 lg:hidden"
+        />
+      )}
+
+      {/* =====================================================
+          SIDEBAR
+      ====================================================== */}
+      <aside
+        className={`
+          fixed left-0 top-0 z-50 h-screen w-72
+          border-r border-white/5
+          transition-transform duration-300 ease-in-out
+
+          lg:w-64
+          lg:translate-x-0
+
+          ${isOpen ? "translate-x-0" : "-translate-x-full"}
+        `}
+      >
+        <div className="flex h-full flex-col bg-slate-950/95 backdrop-blur-xl">
+          {/* =================================================
+              LOGO
+          ================================================== */}
+          <div className="flex shrink-0 items-center justify-between border-b border-white/5 px-6 py-5">
+            <Link
+              href="/"
+              onClick={closeSidebar}
+              className="text-2xl font-bold tracking-tight text-white"
+            >
+              Medi<span className="text-[#00C2B5]">Care</span>
+            </Link>
+
+            {/* Mobile close */}
+            <button
+              type="button"
+              onClick={closeSidebar}
+              aria-label="Close dashboard menu"
+              className="flex h-9 w-9 items-center justify-center rounded-lg text-slate-400 transition hover:bg-white/5 hover:text-white lg:hidden"
+            >
+              <X size={20} />
+            </button>
+          </div>
+
+          {/* =================================================
+              USER PROFILE
+          ================================================== */}
+          <div className="shrink-0 border-b border-white/5 px-6 py-5">
+            <div className="flex items-center gap-3">
+              <div className="h-10 w-10 shrink-0 overflow-hidden rounded-full border-2 border-[#00A99D]/50">
+                <Image
+                  width={40}
+                  height={40}
+                  src={avatarUrl}
+                  alt="User avatar"
+                  className="h-full w-full object-cover"
+                />
+              </div>
+
+              <div className="min-w-0">
+                <p className="truncate text-sm font-bold leading-tight text-white">
+                  {session?.user?.name || "User"}
+                </p>
+
+                <span
+                  className={`text-[10px] font-bold uppercase tracking-wider ${
+                    role === "admin"
+                      ? "text-yellow-400"
+                      : role === "doctor"
+                      ? "text-[#00C2B5]"
+                      : "text-blue-400"
+                  }`}
+                >
+                  {role || "user"}
+                </span>
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Navigation Menu */}
-        <nav className="flex-grow overflow-y-auto px-3 py-4 space-y-1">
-          <p className="text-[10px] text-slate-600 font-bold uppercase tracking-widest px-3 pb-2">Navigation</p>
-          {
-            manuItems?.map(({ key, label, icon: Icon, href }) => {
+          {/* =================================================
+              NAVIGATION
+          ================================================== */}
+          <nav className="flex-1 overflow-y-auto px-3 py-4">
+            <p className="px-3 pb-2 text-[10px] font-bold uppercase tracking-widest text-slate-600">
+              Navigation
+            </p>
 
-              return (
+            <div className="space-y-1">
+              {menuItems.map(({ key, label, icon: Icon, href }) => (
                 <Link
                   key={key}
                   href={href}
-                  className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold transition-all duration-150 text-left cursor-pointer text-slate-400 hover:text-white hover:bg-white/5"
-                            `}
+                  onClick={closeSidebar}
+                  className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-400 transition-all duration-150 hover:bg-white/5 hover:text-white"
                 >
-                  <span className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 transition-colors bg-white/5 text-slate-400`}>
-                    <Icon size={20} />
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/5 text-slate-400">
+                    <Icon size={18} />
                   </span>
-                  <span>{label}</span>
 
-
-                  {/* {isActive && <span className="ml-auto w-1.5 h-1.5 rounded-full bg-pink-400" />} */}
+                  <span className="truncate">{label}</span>
                 </Link>
-              )
-            })
-          }
+              ))}
+            </div>
+          </nav>
 
-        </nav>
+          {/* =================================================
+              BOTTOM ACTIONS
+          ================================================== */}
+          <div className="shrink-0 space-y-1 border-t border-white/5 px-3 py-4">
+            <Link
+              href="/"
+              onClick={closeSidebar}
+              className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-400 transition-all duration-150 hover:bg-white/5 hover:text-white"
+            >
+              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/5">
+                <FaHome size={13} />
+              </span>
 
-        {/* Bottom Links */}
-        <div className="px-3 py-4 border-t border-white/5 space-y-1">
-          <Link href="/" className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-400 hover:text-white hover:bg-white/5 transition-all duration-150">
-            <span className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center shrink-0">
-              <FaHome size={13} />
-            </span>
-            Back to Site
-          </Link>
-          <button
-            onClick={handleLogout}
-            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-400 hover:text-red-400 hover:bg-red-500/5 transition-all duration-150 cursor-pointer"
-          >
-            <span className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center shrink-0">
-              <FaSignOutAlt size={13} />
-            </span>
-            Sign Out
-          </button>
+              <span>Back to Site</span>
+            </Link>
+
+            <Link
+            href={'/login'}
+              type="button"
+              onClick={handleLogout}
+              className="flex w-full cursor-pointer items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-400 transition-all duration-150 hover:bg-red-500/5 hover:text-red-400"
+            >
+              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/5">
+                <FaSignOutAlt size={13} />
+              </span>
+
+              <span>Sign Out</span>
+            </Link>
+          </div>
         </div>
-      </div>
-    </aside>
+      </aside>
+    </>
   );
 };
 
 export default DashboardSideBar;
+

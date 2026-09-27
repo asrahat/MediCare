@@ -1,11 +1,5 @@
-import React from 'react';
+import AppointmentRequests from "@/components/doctors/AppointmentRequests";
 
-const AppointmentRequests = () => {
-    return (
-        <div>
-            Appointment Requests
-        </div>
-    );
-};
-
-export default AppointmentRequests;
+export default function Page() {
+  return <AppointmentRequests />;
+}

@@ -1,20 +1,17 @@
-"use client";
-
 import DashboardSideBar from "@/components/dashboard/DashboardSideBar";
-
 const DashboardLayout = ({ children }) => {
-
-    // console.log(role);
-
-    return (
-        <div className="min-h-screen flex bg-[#080c16]">
-            <DashboardSideBar />
-            
-            <div className="px-6 py-10 max-w-5xl w-full">
-                {children}
-            </div>
-        </div>
-    );
+  return (
+    <div className="min-h-screen bg-[#080c16]">
+      {" "}
+      <DashboardSideBar /> {" "}
+      <main className="min-h-screen lg:ml-64">
+        {" "}
+        <div className="w-full px-4 py-20 sm:px-6 sm:py-20 lg:px-8 lg:py-10">
+          {" "}
+          {children}{" "}
+        </div>{" "}
+      </main>{" "}
+    </div>
+  );
 };
-// /dashboard/organizer 
 export default DashboardLayout;

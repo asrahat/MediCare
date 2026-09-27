@@ -19,9 +19,6 @@ import { serverFetch } from "@/lib/core/server";
 import { getAppointments } from "@/lib/actions/appointment";
 import { getReviews } from "@/lib/api/reviews";
 
-// ======================================================
-// Helpers
-// ======================================================
 
 const getArrayFromResponse = (response, keys = []) => {
   if (Array.isArray(response)) return response;

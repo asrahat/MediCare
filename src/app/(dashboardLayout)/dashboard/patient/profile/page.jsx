@@ -125,76 +125,94 @@ export default function ProfilePage() {
   };
 
  
-  const handleSave = async () => {
-  const trimmedName = name.trim();
-
-  if (!trimmedName) {
-    setError("Please enter your name.");
+const handleSave = async () => {
+  if (!userId) {
+    setError("User not logged in");
     return;
   }
 
+  setSaving(true);
+  setError("");
+
   try {
-    setSaving(true);
-    setError("");
-    setSuccess("");
+    const profileData = {
+      doctorName: formData.doctorName,
+      specialization: formData.specialization,
+      qualifications: Array.isArray(formData.qualifications)
+        ? formData.qualifications
+        : [],
+      experience: Number(formData.experience) || 0,
+      consultationFee: Number(formData.consultationFee) || 0,
+      hospitalName: formData.hospitalName || "",
+      profileImage: formData.profileImage || "",
+      availableDays: Array.isArray(formData.availableDays)
+        ? formData.availableDays
+        : [],
+      availableSlots: Array.isArray(formData.availableSlots)
+        ? formData.availableSlots
+        : [],
+    };
 
-    let updatedImage = image;
+    let result;
 
-    if (selectedImage) {
-      updatedImage = await uploadImage(selectedImage);
-
-      if (!updatedImage) {
-        throw new Error(
-          "Image upload failed. Please try again."
-        );
-      }
-    }
-
-    const result = await authClient.updateUser({
-      name: trimmedName,
-      image: updatedImage || null,
-    });
-
-    if (result?.error) {
-      throw new Error(
-        result.error.message ||
-          "Failed to update profile."
+    if (!doctor || !doctor._id) {
+      result = await createDoctorProfile(
+        userId,
+        profileData
       );
     }
 
-  
-    setName(trimmedName);
-    setImage(updatedImage || "");
-
-    setOriginalName(trimmedName);
-    setOriginalImage(updatedImage || "");
-
-    setSelectedImage(null);
-    setPreviewImage("");
-
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
+   
+    else {
+      result = await updateDoctorProfile(
+        doctor._id,
+        profileData
+      );
     }
 
-    setSuccess("Profile updated successfully.");
+    if (!result.success) {
+      throw new Error(
+        result.message || "Failed to save doctor profile"
+      );
+    }
 
- 
-    await authClient.getSession();
+    // Save returned doctor to state
+    setDoctor(result.data);
 
-    window.location.reload();
+    // Optional: update form with saved data
+    setFormData({
+      doctorName: result.data.doctorName || "",
+      specialization: result.data.specialization || "",
+      qualifications: Array.isArray(result.data.qualifications)
+        ? result.data.qualifications
+        : [],
+      experience: result.data.experience || "",
+      consultationFee: result.data.consultationFee || "",
+      hospitalName: result.data.hospitalName || "",
+      profileImage: result.data.profileImage || "",
+      availableDays: Array.isArray(result.data.availableDays)
+        ? result.data.availableDays
+        : [],
+      availableSlots: Array.isArray(result.data.availableSlots)
+        ? result.data.availableSlots
+        : [],
+    });
 
-  } catch (err) {
-    console.error("Profile update error:", err);
+    setSuccess(
+      doctor
+        ? "Doctor profile updated successfully!"
+        : "Doctor profile created successfully!"
+    );
+  } catch (error) {
+    console.error("Save doctor profile:", error);
 
     setError(
-      err?.message ||
-        "Failed to update your profile."
+      error.message || "Failed to save doctor profile"
     );
   } finally {
     setSaving(false);
   }
 };
-
 
   if (isPending) {
     return (

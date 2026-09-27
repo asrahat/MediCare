@@ -1,11 +1,18 @@
-import React from 'react';
+import PrescriptionManagementClient from "@/components/doctors/prescriptions/PrescriptionManagementClient";
 
-const PrescriptionManagement = () => {
-    return (
-        <div>
-                PrescriptionManagement
-        </div>
-    );
+const PrescriptionManagement = async ({
+  searchParams,
+}) => {
+  const params = await searchParams;
+
+  const appointmentId =
+    params?.appointmentId || "";
+
+  return (
+    <PrescriptionManagementClient
+      appointmentId={appointmentId}
+    />
+  );
 };
 
 export default PrescriptionManagement;

@@ -1,10 +1,8 @@
 import DoctorListingContainer from "@/components/doctors/DoctorListingContainer";
 import { getDoctors } from "@/lib/api/doctors";
 
-const DoctorsPage = async ({searchParams}) => {
- 
+const DoctorsPage = async ({ searchParams }) => {
   const filters = (await searchParams) || {};
-
 
   const cleanFilters = {
     search: filters.search || "",
@@ -15,32 +13,33 @@ const DoctorsPage = async ({searchParams}) => {
     page: filters.page || "1",
   };
 
-
   const queryString = new URLSearchParams(cleanFilters).toString();
 
   const { doctors, total } = await getDoctors(queryString);
-console.log(doctors, 'doctors');
 
-    return (
-        <div className="w-full min-h-screen bg-zinc-950 p-6 md:p-12 text-white">
-
-      <div className="max-w-7xl mx-auto mb-10">
+  return (
+    <div className="min-h-screen w-full bg-zinc-950 px-5 py-10 text-white sm:px-8 md:py-12 lg:px-12 xl:px-16 2xl:px-20">
+      {/* Page Header */}
+      <div className="mb-10 w-11/12 mx-auto">
         <h1 className="text-4xl font-bold tracking-tight">
           Find Doctors
         </h1>
-        <p className="text-zinc-400 mt-2">
+
+        <p className="mt-2 text-zinc-400">
           Search by specialization, experience, hospital
         </p>
       </div>
 
-      <DoctorListingContainer
-        filters={cleanFilters}
-        doctors={doctors || []}
-        total={total || 0}
-      />
-
+     
+      <div className="w-full">
+        <DoctorListingContainer
+          filters={cleanFilters}
+          doctors={doctors || []}
+          total={total || 0}
+        />
+      </div>
     </div>
-    ); 
+  );
 };
 
 export default DoctorsPage;

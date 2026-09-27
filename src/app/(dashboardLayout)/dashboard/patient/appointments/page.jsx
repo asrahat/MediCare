@@ -212,67 +212,76 @@ useEffect(() => {
 
 
   const getStatus = (status) => {
-    const value = String(
-      status || "unknown"
-    ).toLowerCase();
+  const value = String(
+    status || "unknown"
+  ).toLowerCase();
 
-    switch (value) {
-      case "confirmed":
-        return {
-          label: "confirmed",
-          className:
-            "border-emerald-400/20 bg-emerald-400/10 text-emerald-400",
-          dot: "bg-emerald-400",
-          icon: CheckCircle2,
-        };
+  switch (value) {
+    case "confirmed":
+      return {
+        label: "Accepted",
+        className:
+          "border-emerald-400/20 bg-emerald-400/10 text-emerald-400",
+        dot: "bg-emerald-400",
+        icon: CheckCircle2,
+      };
 
-      case "completed":
-        return {
-          label: "completed",
-          className:
-            "border-emerald-400/20 bg-emerald-400/10 text-emerald-400",
-          dot: "bg-emerald-400",
-          icon: CheckCircle2,
-        };
+    case "completed":
+      return {
+        label: "Completed",
+        className:
+          "border-sky-400/20 bg-sky-400/10 text-sky-400",
+        dot: "bg-sky-400",
+        icon: CheckCircle2,
+      };
 
-      case "rescheduled":
-        return {
-          label: "rescheduled",
-          className:
-            "border-yellow-400/20 bg-yellow-400/10 text-yellow-400",
-          dot: "bg-yellow-400",
-          icon: AlertCircle,
-        };
+    case "rejected":
+      return {
+        label: "Rejected",
+        className:
+          "border-red-400/20 bg-red-400/10 text-red-400",
+        dot: "bg-red-400",
+        icon: XCircle,
+      };
 
-      case "pending":
-        return {
-          label: "pending",
-          className:
-            "border-yellow-400/20 bg-yellow-400/10 text-yellow-400",
-          dot: "bg-yellow-400",
-          icon: AlertCircle,
-        };
+    case "pending":
+      return {
+        label: "Waiting for Doctor",
+        className:
+          "border-yellow-400/20 bg-yellow-400/10 text-yellow-400",
+        dot: "bg-yellow-400",
+        icon: AlertCircle,
+      };
 
-      case "cancelled":
-      case "canceled":
-        return {
-          label: "cancelled",
-          className:
-            "border-red-400/20 bg-red-400/10 text-red-400",
-          dot: "bg-red-400",
-          icon: XCircle,
-        };
+    case "rescheduled":
+      return {
+        label: "Rescheduled",
+        className:
+          "border-yellow-400/20 bg-yellow-400/10 text-yellow-400",
+        dot: "bg-yellow-400",
+        icon: AlertCircle,
+      };
 
-      default:
-        return {
-          label: value,
-          className:
-            "border-slate-400/20 bg-slate-400/10 text-slate-400",
-          dot: "bg-slate-400",
-          icon: AlertCircle,
-        };
-    }
-  };
+    case "cancelled":
+    case "canceled":
+      return {
+        label: "Cancelled",
+        className:
+          "border-red-400/20 bg-red-400/10 text-red-400",
+        dot: "bg-red-400",
+        icon: XCircle,
+      };
+
+    default:
+      return {
+        label: value,
+        className:
+          "border-slate-400/20 bg-slate-400/10 text-slate-400",
+        dot: "bg-slate-400",
+        icon: AlertCircle,
+      };
+  }
+};
 
   const formatDate = (date) => {
     if (!date) return "N/A";

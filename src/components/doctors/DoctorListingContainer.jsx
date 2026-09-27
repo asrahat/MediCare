@@ -1,8 +1,6 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-// import DoctorCard from "@/components/doctors/DoctorCard";
-// import DoctorFilters from "@/components/doctors/DoctorFilters";
 import { useRouter } from "next/navigation";
 import { Pagination } from "@heroui/react";
 import DoctorCard from "./DoctorCard";
@@ -11,37 +9,54 @@ import DoctorFilters from "./DoctorFilters";
 export default function DoctorListingContainer({
   doctors,
   filters,
-  total
+  total,
 }) {
-
   const router = useRouter();
 
   const [searchQuery, setSearchQuery] = useState(filters.search || "");
-  const [selectedSpecialization, setSelectedSpecialization] = useState(filters.specialization || "all");
-  const [minExperience, setMinExperience] = useState(filters.experience || "");
-  const [page, setPage] = useState(filters.page || 1);
+  const [selectedSpecialization, setSelectedSpecialization] = useState(
+    filters.specialization || "all"
+  );
+  const [minExperience, setMinExperience] = useState(
+    filters.experience || ""
+  );
+  const [page, setPage] = useState(Number(filters.page) || 1);
 
   const itemsPerPage = 12;
   const totalPages = Math.ceil(total / itemsPerPage);
 
   useEffect(() => {
-
     const sp = new URLSearchParams();
 
     if (searchQuery) sp.set("search", searchQuery);
-    if (selectedSpecialization !== "all") sp.set("specialization", selectedSpecialization);
-    if (minExperience) sp.set("experience", minExperience);
-    if (page) sp.set("page", page);
+
+    if (selectedSpecialization !== "all") {
+      sp.set("specialization", selectedSpecialization);
+    }
+
+    if (minExperience) {
+      sp.set("experience", minExperience);
+    }
+
+    if (page) {
+      sp.set("page", page);
+    }
 
     router.push(`?${sp.toString()}`);
+  }, [
+    searchQuery,
+    selectedSpecialization,
+    minExperience,
+    page,
+    router,
+  ]);
 
-  }, [searchQuery, selectedSpecialization, minExperience, page]);
-
-  const startItem = (page - 1) * itemsPerPage + 1;
+  const startItem = total > 0 ? (page - 1) * itemsPerPage + 1 : 0;
   const endItem = Math.min(page * itemsPerPage, total);
 
   return (
-    <>
+    <div className="w-11/12 mx-auto">
+      {/* Filters */}
       <DoctorFilters
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
@@ -51,34 +66,56 @@ export default function DoctorListingContainer({
         setMinExperience={setMinExperience}
       />
 
-      <div className="max-w-7xl mx-auto mb-6 text-sm text-zinc-500">
-        Showing {doctors.length} doctors
+      {/* Results Info */}
+      <div className="mb-6 w-full text-sm text-zinc-500">
+        {total > 0 ? (
+          <>
+            Showing{" "}
+            <span className="font-medium text-zinc-300">
+              {startItem}-{endItem}
+            </span>{" "}
+            of{" "}
+            <span className="font-medium text-zinc-300">
+              {total}
+            </span>{" "}
+            doctors
+          </>
+        ) : (
+          "Showing 0 doctors"
+        )}
       </div>
 
+      {/* Doctor Grid */}
       {doctors.length > 0 ? (
         <>
-          <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid w-full grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {doctors.map((doctor) => (
-              <DoctorCard key={doctor._id} doctor={doctor} />
+              <DoctorCard
+                key={doctor._id}
+                doctor={doctor}
+              />
             ))}
           </div>
 
-          <div className="flex justify-center mt-10">
-            <Pagination
-              page={page}
-              total={totalPages}
-              onChange={(p) => setPage(p)}
-            />
-          </div>
-
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <div className="mt-10 flex justify-center">
+              <Pagination
+                page={page}
+                total={totalPages}
+                onChange={(p) => setPage(p)}
+              />
+            </div>
+          )}
         </>
       ) : (
-        <div className="text-center py-20 border border-dashed border-zinc-800 rounded-[32px] max-w-7xl mx-auto">
-          <p className="text-zinc-500 text-lg">
+        /* Empty State */
+        <div className="flex min-h-[280px] w-full items-center justify-center rounded-[32px] border border-dashed border-zinc-800">
+          <p className="text-lg text-zinc-500">
             No doctors found.
           </p>
         </div>
       )}
-    </>
+    </div>
   );
 }

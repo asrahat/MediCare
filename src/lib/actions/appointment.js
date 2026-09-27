@@ -1,162 +1,346 @@
 "use server";
 
-const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL;
+const SERVER_URL =
+  process.env.NEXT_PUBLIC_SERVER_URL;
 
 
-export const createAppointment = async (data) => {
+export async function createAppointment(data) {
   try {
-    const res = await fetch(`${SERVER_URL}/appointments`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
+    const response = await fetch(
+      `${SERVER_URL}/appointments`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+        cache: "no-store",
+      }
+    );
 
-    const result = await res.json();
+    const result = await response.json();
 
-    if (!res.ok) {
+    if (!response.ok) {
       throw new Error(
-        result?.message || "Failed to create appointment"
+        result?.message ||
+          "Failed to create appointment"
       );
     }
 
     return result;
   } catch (error) {
-    console.error("Create appointment action error:", error);
-    throw error;
-  }
-};
+    console.error(
+      "createAppointment error:",
+      error
+    );
 
-export const getAppointments = async (userId) => {
+    return {
+      success: false,
+      data: null,
+      message:
+        error?.message ||
+        "Failed to create appointment",
+    };
+  }
+}
+
+export async function getAppointments(userId) {
   try {
     if (!userId) {
-      throw new Error("User ID is required");
+      return {
+        success: false,
+        data: [],
+        message: "User ID is required",
+      };
     }
 
-    const res = await fetch(
-      `${SERVER_URL}/appointments/user/${userId}`,
+    const response = await fetch(
+      `${SERVER_URL}/appointments/user/${encodeURIComponent(
+        userId
+      )}`,
       {
         method: "GET",
         cache: "no-store",
       }
     );
 
-    const result = await res.json();
+    const result = await response.json();
 
-    if (!res.ok) {
+    if (!response.ok) {
       throw new Error(
-        result?.message || "Failed to fetch appointments"
+        result?.message ||
+          "Failed to get appointments"
       );
     }
 
     return result;
   } catch (error) {
-    console.error("Get appointments action error:", error);
-    throw error;
+    console.error(
+      "getAppointments error:",
+      error
+    );
+
+    return {
+      success: false,
+      data: [],
+      message:
+        error?.message ||
+        "Failed to get appointments",
+    };
   }
-};
+}
 
 
-
-export const getAppointment = async (id) => {
+export async function getAppointment(id) {
   try {
     if (!id) {
-      throw new Error("Appointment ID is required");
+      return {
+        success: false,
+        data: null,
+        message: "Appointment ID is required",
+      };
     }
 
-    const res = await fetch(
-      `${SERVER_URL}/appointments/${id}`,
+    const response = await fetch(
+      `${SERVER_URL}/appointments/${encodeURIComponent(
+        id
+      )}`,
       {
         method: "GET",
         cache: "no-store",
       }
     );
 
-    const result = await res.json();
+    const result = await response.json();
 
-    if (!res.ok) {
+    if (!response.ok) {
       throw new Error(
-        result?.message || "Failed to fetch appointment"
+        result?.message ||
+          "Failed to get appointment"
       );
     }
 
     return result;
   } catch (error) {
-    console.error("Get appointment action error:", error);
-    throw error;
+    console.error(
+      "getAppointment error:",
+      error
+    );
+
+    return {
+      success: false,
+      data: null,
+      message:
+        error?.message ||
+        "Failed to get appointment",
+    };
   }
-};
+}
 
-
-export const rescheduleAppointment = async (id, data) => {
+export async function acceptAppointment(id) {
   try {
-    if (!id) {
-      throw new Error("Appointment ID is required");
+    const response = await fetch(
+      `${SERVER_URL}/appointments/${encodeURIComponent(
+        id
+      )}/accept`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        cache: "no-store",
+      }
+    );
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(
+        result?.message ||
+          "Failed to accept appointment"
+      );
     }
 
-    const res = await fetch(
-      `${SERVER_URL}/appointments/${id}/reschedule`,
+    return result;
+  } catch (error) {
+    console.error(
+      "acceptAppointment error:",
+      error
+    );
+
+    return {
+      success: false,
+      message:
+        error?.message ||
+        "Failed to accept appointment",
+    };
+  }
+}
+
+
+export async function rejectAppointment(id) {
+  try {
+    const response = await fetch(
+      `${SERVER_URL}/appointments/${encodeURIComponent(
+        id
+      )}/reject`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        cache: "no-store",
+      }
+    );
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(
+        result?.message ||
+          "Failed to reject appointment"
+      );
+    }
+
+    return result;
+  } catch (error) {
+    console.error(
+      "rejectAppointment error:",
+      error
+    );
+
+    return {
+      success: false,
+      message:
+        error?.message ||
+        "Failed to reject appointment",
+    };
+  }
+}
+
+
+export async function completeAppointment(id) {
+  try {
+    const response = await fetch(
+      `${SERVER_URL}/appointments/${encodeURIComponent(
+        id
+      )}/complete`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        cache: "no-store",
+      }
+    );
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(
+        result?.message ||
+          "Failed to complete appointment"
+      );
+    }
+
+    return result;
+  } catch (error) {
+    console.error(
+      "completeAppointment error:",
+      error
+    );
+
+    return {
+      success: false,
+      message:
+        error?.message ||
+        "Failed to complete appointment",
+    };
+  }
+}
+
+
+export async function rescheduleAppointment(
+  id,
+  data
+) {
+  try {
+    const response = await fetch(
+      `${SERVER_URL}/appointments/${encodeURIComponent(
+        id
+      )}/reschedule`,
       {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
+        cache: "no-store",
       }
     );
 
-    const result = await res.json();
+    const result = await response.json();
 
-    if (!res.ok) {
+    if (!response.ok) {
       throw new Error(
-        result?.message || "Failed to reschedule appointment"
+        result?.message ||
+          "Failed to reschedule appointment"
       );
     }
 
     return result;
   } catch (error) {
     console.error(
-      "Reschedule appointment action error:",
+      "rescheduleAppointment error:",
       error
     );
 
-    throw error;
+    return {
+      success: false,
+      message:
+        error?.message ||
+        "Failed to reschedule appointment",
+    };
   }
-};
+}
 
 
-export const cancelAppointment = async (id) => {
+export async function cancelAppointment(id) {
   try {
-    if (!id) {
-      throw new Error("Appointment ID is required");
-    }
-
-    const res = await fetch(
-      `${SERVER_URL}/appointments/${id}/cancel`,
+    const response = await fetch(
+      `${SERVER_URL}/appointments/${encodeURIComponent(
+        id
+      )}/cancel`,
       {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
+        cache: "no-store",
       }
     );
 
-    const result = await res.json();
+    const result = await response.json();
 
-    if (!res.ok) {
+    if (!response.ok) {
       throw new Error(
-        result?.message || "Failed to cancel appointment"
+        result?.message ||
+          "Failed to cancel appointment"
       );
     }
 
     return result;
   } catch (error) {
     console.error(
-      "Cancel appointment action error:",
+      "cancelAppointment error:",
       error
     );
 
-    throw error;
+    return {
+      success: false,
+      message:
+        error?.message ||
+        "Failed to cancel appointment",
+    };
   }
-};
+}

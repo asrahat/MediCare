@@ -1,4 +1,4 @@
-import { getPayments } from "@/lib/actions/payment";
+import { getPayments  } from "@/lib/actions/payment";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import React from "react";
@@ -20,7 +20,7 @@ const Payments = async () => {
     );
   }
 
-  const paymentResponse = await getPayments(userId);
+  const paymentResponse = await getPayments (userId);
   const payments = paymentResponse?.data || [];
 
   return (
