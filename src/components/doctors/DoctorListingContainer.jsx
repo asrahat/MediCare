@@ -1,8 +1,7 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Pagination } from "@heroui/react";
 import DoctorCard from "./DoctorCard";
 import DoctorFilters from "./DoctorFilters";
 
@@ -10,6 +9,8 @@ export default function DoctorListingContainer({
   doctors,
   filters,
   total,
+  page = 1,
+  perPage = 8,
 }) {
   const router = useRouter();
 
@@ -20,15 +21,22 @@ export default function DoctorListingContainer({
   const [minExperience, setMinExperience] = useState(
     filters.experience || ""
   );
-  const [page, setPage] = useState(Number(filters.page) || 1);
+  const [currentPage, setCurrentPage] = useState(Number(page) || 1);
 
-  const itemsPerPage = 12;
-  const totalPages = Math.ceil(total / itemsPerPage);
+  const itemsPerPage = Number(perPage) || 8;
+  const totalDoctors = Number(total) || 0;
+  const totalPages = Math.ceil(totalDoctors / itemsPerPage);
+
+  useEffect(() => {
+    setCurrentPage(Number(page) || 1);
+  }, [page]);
 
   useEffect(() => {
     const sp = new URLSearchParams();
 
-    if (searchQuery) sp.set("search", searchQuery);
+    if (searchQuery) {
+      sp.set("search", searchQuery);
+    }
 
     if (selectedSpecialization !== "all") {
       sp.set("specialization", selectedSpecialization);
@@ -38,25 +46,43 @@ export default function DoctorListingContainer({
       sp.set("experience", minExperience);
     }
 
-    if (page) {
-      sp.set("page", page);
-    }
+    sp.set("verificationStatus", "verified");
+    sp.set("page", String(currentPage));
+    sp.set("perPage", String(itemsPerPage));
 
-    router.push(`?${sp.toString()}`);
+    router.push(`/doctors?${sp.toString()}`);
   }, [
     searchQuery,
     selectedSpecialization,
     minExperience,
-    page,
+    currentPage,
+    itemsPerPage,
     router,
   ]);
 
-  const startItem = total > 0 ? (page - 1) * itemsPerPage + 1 : 0;
-  const endItem = Math.min(page * itemsPerPage, total);
+  const handlePageChange = (newPage) => {
+    if (newPage < 1 || newPage > totalPages) return;
+
+    setCurrentPage(newPage);
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
+  const startItem =
+    totalDoctors > 0
+      ? (currentPage - 1) * itemsPerPage + 1
+      : 0;
+
+  const endItem = Math.min(
+    currentPage * itemsPerPage,
+    totalDoctors
+  );
 
   return (
-    <div className="w-11/12 mx-auto">
-      {/* Filters */}
+    <div className="mx-auto w-11/12">
       <DoctorFilters
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
@@ -66,9 +92,8 @@ export default function DoctorListingContainer({
         setMinExperience={setMinExperience}
       />
 
-      {/* Results Info */}
       <div className="mb-6 w-full text-sm text-zinc-500">
-        {total > 0 ? (
+        {totalDoctors > 0 ? (
           <>
             Showing{" "}
             <span className="font-medium text-zinc-300">
@@ -76,7 +101,7 @@ export default function DoctorListingContainer({
             </span>{" "}
             of{" "}
             <span className="font-medium text-zinc-300">
-              {total}
+              {totalDoctors}
             </span>{" "}
             doctors
           </>
@@ -85,8 +110,7 @@ export default function DoctorListingContainer({
         )}
       </div>
 
-      {/* Doctor Grid */}
-      {doctors.length > 0 ? (
+      {doctors?.length > 0 ? (
         <>
           <div className="grid w-full grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {doctors.map((doctor) => (
@@ -97,19 +121,55 @@ export default function DoctorListingContainer({
             ))}
           </div>
 
-          {/* Pagination */}
           {totalPages > 1 && (
-            <div className="mt-10 flex justify-center">
-              <Pagination
-                page={page}
-                total={totalPages}
-                onChange={(p) => setPage(p)}
-              />
+            <div className="mt-12 flex w-full justify-center">
+              <div className="flex items-center gap-2 rounded-2xl border border-zinc-800 bg-zinc-900/80 p-2 shadow-xl">
+                <button
+                  type="button"
+                  onClick={() =>
+                    handlePageChange(currentPage - 1)
+                  }
+                  disabled={currentPage === 1}
+                  className="flex h-10 min-w-10 items-center justify-center rounded-xl px-3 text-sm font-medium text-zinc-300 transition hover:bg-zinc-800 hover:text-white disabled:cursor-not-allowed disabled:opacity-30"
+                >
+                  ←
+                </button>
+
+                {Array.from(
+                  { length: totalPages },
+                  (_, index) => index + 1
+                ).map((pageNumber) => (
+                  <button
+                    key={pageNumber}
+                    type="button"
+                    onClick={() =>
+                      handlePageChange(pageNumber)
+                    }
+                    className={`flex h-10 min-w-10 items-center justify-center rounded-xl px-3 text-sm font-semibold transition ${
+                      currentPage === pageNumber
+                        ? "bg-cyan-500 text-white shadow-lg shadow-cyan-500/20"
+                        : "text-zinc-400 hover:bg-zinc-800 hover:text-white"
+                    }`}
+                  >
+                    {pageNumber}
+                  </button>
+                ))}
+
+                <button
+                  type="button"
+                  onClick={() =>
+                    handlePageChange(currentPage + 1)
+                  }
+                  disabled={currentPage === totalPages}
+                  className="flex h-10 min-w-10 items-center justify-center rounded-xl px-3 text-sm font-medium text-zinc-300 transition hover:bg-zinc-800 hover:text-white disabled:cursor-not-allowed disabled:opacity-30"
+                >
+                  →
+                </button>
+              </div>
             </div>
           )}
         </>
       ) : (
-        /* Empty State */
         <div className="flex min-h-[280px] w-full items-center justify-center rounded-[32px] border border-dashed border-zinc-800">
           <p className="text-lg text-zinc-500">
             No doctors found.
