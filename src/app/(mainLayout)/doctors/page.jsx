@@ -1,6 +1,12 @@
 import DoctorListingContainer from "@/components/doctors/DoctorListingContainer";
 import { getDoctors } from "@/lib/api/doctors";
 
+export const metadata = {
+  title: "Doctors",
+  description:
+    "Discover healthcare professionals and find the right doctor for your needs.",
+};
+
 const DoctorsPage = async ({ searchParams }) => {
 const filters = (await searchParams) || {};
 

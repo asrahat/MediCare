@@ -9,6 +9,53 @@ import { getDoctorById } from "@/lib/api/doctors";
 import Image from "next/image";
 import { Button } from "@heroui/react";
 
+export async function generateMetadata({ params }) {
+  const { id } = await params;
+
+  const doctor = await getDoctorById(id);
+
+  if (!doctor) {
+    return {
+      title: "Doctor Not Found",
+      description:
+        "The requested doctor profile could not be found or is unavailable.",
+    };
+  }
+
+  const doctorName = doctor.doctorName || "Doctor";
+  const specialization =
+    doctor.specialization || "Medical Practitioner";
+  const hospitalName = doctor.hospitalName || "";
+
+  return {
+    title: `${doctorName} - ${specialization}`,
+    description: `View the profile, qualifications, experience, availability, and consultation details of ${doctorName}${hospitalName ? ` at ${hospitalName}` : ""}. Book an appointment through Medi-Care.`,
+    keywords: [
+      doctorName,
+      specialization,
+      hospitalName,
+      "doctor appointment",
+      "Medi-Care",
+      "medical care",
+    ].filter(Boolean),
+    openGraph: {
+      title: `${doctorName} - ${specialization} | Medi-Care`,
+      description: `View ${doctorName}'s medical profile and book an appointment through Medi-Care.`,
+      type: "profile",
+      images: doctor.profileImage
+        ? [
+            {
+              url: doctor.profileImage,
+              width: 400,
+              height: 400,
+              alt: doctorName,
+            },
+          ]
+        : undefined,
+    },
+  };
+}
+
 const Page = async ({ params }) => {
   const { id } = await params;
 
@@ -205,7 +252,6 @@ const Page = async ({ params }) => {
           </section>
         </div>
 
-    
         <aside className="h-fit rounded-[28px] border border-zinc-800 bg-zinc-900 p-6 shadow-xl lg:sticky lg:top-8 lg:col-span-4">
           <div className="mb-6">
             <h2 className="text-xl font-semibold text-white">

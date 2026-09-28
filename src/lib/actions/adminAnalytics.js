@@ -3,10 +3,6 @@
 const SERVER_URL =
   process.env.NEXT_PUBLIC_SERVER_URL;
 
-// =========================================================
-// GET ADMIN ANALYTICS
-// =========================================================
-
 export async function getAdminAnalytics() {
   try {
     const response = await fetch(

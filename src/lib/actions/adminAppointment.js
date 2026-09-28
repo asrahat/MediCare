@@ -4,10 +4,6 @@ const SERVER_URL =
   process.env.NEXT_PUBLIC_SERVER_URL;
 
 
-// =====================================================
-// GET ALL APPOINTMENTS
-// =====================================================
-
 export async function getAllAppointments({
   searchValue = "",
   appointmentStatus = "",
