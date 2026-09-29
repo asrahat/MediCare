@@ -1,15 +1,27 @@
 ````md
 # 🏥 Medi-Care
 
-> A modern full-stack healthcare platform for discovering doctors, booking appointments, managing payments, and administering healthcare services.
+### Modern Full-Stack Healthcare Management Platform
 
-**Next.js** • **React** • **Express.js** • **MongoDB** • **BetterAuth** • **Stripe**
+Medi-Care is a modern healthcare platform that connects patients with verified doctors and provides a complete digital experience for doctor discovery, appointment booking, secure payments, and healthcare management.
+
+[![Live Demo](https://img.shields.io/badge/Live-Demo-00C7B7?style=for-the-badge)](https://medi-care-kappa-ten.vercel.app/)
+[![Next.js](https://img.shields.io/badge/Next.js-15-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react)](https://react.dev/)
+[![Express.js](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express)](https://expressjs.com/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
+[![BetterAuth](https://img.shields.io/badge/BetterAuth-Authentication-111827?style=for-the-badge)](https://www.better-auth.com/)
+[![Stripe](https://img.shields.io/badge/Stripe-Payments-635BFF?style=for-the-badge&logo=stripe&logoColor=white)](https://stripe.com/)
 
 ---
 
 ## 🌐 Live Demo
 
-🚀 **[Visit Medi-Care Live](https://medi-care-kappa-ten.vercel.app/)**
+🚀 **[Visit Medi-Care](https://medi-care-kappa-ten.vercel.app/)**
+
+Explore the deployed application:
+
+**https://medi-care-kappa-ten.vercel.app/**
 
 ---
 
@@ -25,50 +37,50 @@
 
 ---
 
-## 📖 About the Project
+# 📖 About the Project
 
 **Medi-Care** is a full-stack healthcare management platform designed to connect patients with verified healthcare professionals through a modern, secure, and user-friendly digital experience.
 
 The platform provides dedicated workflows for:
 
 - 👤 Patients
-- 🩺 Doctors
+- 🧑‍⚕️ Doctors
 - 🛡️ Administrators
 
 Patients can discover verified doctors, search and filter healthcare professionals, view doctor profiles, book appointments, make secure payments, and manage their appointments.
 
-Doctors can manage their professional information and appointment-related workflows.
+Doctors can manage their professional information, availability, and healthcare-related workflows.
 
-Administrators have access to a dedicated dashboard where they can manage users, verify doctors, manage appointments and payments, and monitor platform analytics.
+Administrators have access to a dedicated dashboard for managing users, doctors, appointments, payments, verification, and platform analytics.
 
 ---
 
-# ✨ Features
+# ✨ Key Features
 
 ## 👤 Patient Features
 
-- 🔐 Email and password authentication
-- 🔵 Google authentication
+- 🔐 Email & password authentication
+- 🔵 Google OAuth authentication
 - 👤 Patient profile management
 - 🔎 Search doctors
 - 🩺 Filter doctors by specialization
 - 📊 Filter doctors by experience
 - 💰 Filter doctors by consultation fee
 - ✅ Browse verified doctors
-- 📄 Paginated doctor listing
-- 👨‍⚕️ View detailed doctor profiles
+- 📄 Paginated doctor listings
+- 🧑‍⚕️ View detailed doctor profiles
 - 📅 Book appointments
 - 🔄 Reschedule appointments
 - ❌ Cancel appointments
 - 📋 View appointment history
-- 💳 Secure Stripe payment
+- 💳 Secure Stripe payments
 - 💰 View payment records
 - 🔔 User-friendly notifications
 - 📱 Responsive interface
 
 ---
 
-## 🩺 Doctor Features
+## 🧑‍⚕️ Doctor Features
 
 - 🔐 Secure authentication
 - 👤 Doctor profile management
@@ -90,16 +102,16 @@ Administrators have access to a dedicated dashboard where they can manage users,
 
 - 📊 Admin dashboard
 - 👥 Manage users
-- 🩺 Manage doctors
+- 🧑‍⚕️ Manage doctors
 - ✅ Verify doctors
 - ❌ Reject doctor verification
-- 🔄 Manage doctor verification status
+- 🔄 Manage verification status
 - 📅 Manage appointments
 - 💳 Payment management
 - 📈 Platform analytics
 - 👤 Monitor registered patients
-- 🩺 Monitor registered doctors
-- 📅 Monitor appointments
+- 🧑‍⚕️ Monitor registered doctors
+- 📋 Monitor appointment records
 - ⭐ Monitor doctor ratings
 - 📊 Doctor performance analytics
 - 🚫 Block or suspend users
@@ -107,87 +119,43 @@ Administrators have access to a dedicated dashboard where they can manage users,
 
 ---
 
-# 📊 Analytics Dashboard
+# 🔎 Doctor Discovery
 
-The admin dashboard provides an overview of the platform's important statistics.
+Medi-Care provides a dedicated doctor directory where patients can easily find healthcare professionals.
 
-### Dashboard Metrics
+### Search & Filtering
 
-- 👤 Total Patients
-- 🩺 Total Doctors
-- 📅 Total Appointments
-- ⭐ Average Doctor Rating
+Patients can search and filter doctors using:
 
-### Doctor Performance
+- Doctor name
+- Specialization
+- Experience
+- Consultation fee
+- Verification status
 
-Administrators can view doctor performance through a visual rating chart.
-
-This provides an overview of doctor ratings and helps administrators monitor performance across the platform.
-
----
-
-# 🔐 Authentication & Authorization
-
-Medi-Care uses **BetterAuth** for authentication, sessions, and role-based authorization.
-
-### Authentication Methods
-
-- Email & Password
-- Google OAuth
-- Secure sessions
-- Role-based access control
-- Protected dashboard routes
-- Protected backend APIs
-
-### User Roles
-
-| Role | Access |
-|------|--------|
-| `patient` | Doctors, appointments, payments, patient dashboard |
-| `doctor` | Doctor profile and doctor dashboard |
-| `admin` | Users, doctors, appointments, payments, analytics |
-
----
-
-# 👨‍⚕️ Doctor Discovery
-
-The doctor directory allows patients to quickly find healthcare professionals.
-
-Users can:
-
-- Search doctors
-- Filter by specialization
-- Filter by experience
-- Filter by consultation fee
-- View verified doctors
-- Navigate through multiple pages
-- Open detailed doctor profiles
-
-### 🔎 Search & Filtering
-
-The doctor listing supports multiple filters:
+### Doctor Listing Flow
 
 ```text
-Search
-   │
-   ├── Doctor Name
-   │
-   ├── Specialization
-   │
-   ├── Experience
-   │
-   └── Consultation Fee
+Search / Filter
+      ↓
+Verified Doctors
+      ↓
+Doctor Cards
+      ↓
+Doctor Profile
+      ↓
+Book Appointment
 ````
 
-### 📄 Pagination
+### Pagination
 
-Doctor listings support pagination so the application can efficiently handle larger numbers of doctors.
+Doctor listings support pagination to provide a clean browsing experience and efficiently handle larger datasets.
 
 ---
 
 # 📅 Appointment Management
 
-Patients can manage their healthcare appointments directly from their dashboard.
+Patients can manage their appointments directly from their dashboard.
 
 ### Appointment Workflow
 
@@ -196,7 +164,9 @@ Find Doctor
      ↓
 View Doctor Profile
      ↓
-Select Date & Available Slot
+Select Date
+     ↓
+Select Available Slot
      ↓
 Book Appointment
      ↓
@@ -211,7 +181,7 @@ Reschedule / Cancel
 
 ### Appointment Statuses
 
-The system supports appointment states such as:
+The platform supports:
 
 * Pending
 * Confirmed
@@ -221,7 +191,7 @@ The system supports appointment states such as:
 
 ---
 
-# 💳 Payment System
+# 💳 Secure Payment System
 
 Medi-Care integrates **Stripe Checkout** for secure appointment payments.
 
@@ -241,7 +211,7 @@ Payment Record
 Update Appointment Payment Status
 ```
 
-The application keeps payment information connected with appointment records for easier management.
+Payment information is connected with appointment records so users and administrators can track payment activity.
 
 ---
 
@@ -257,90 +227,100 @@ Doctor Registration
 Pending Verification
         ↓
 Admin Review
-     ↙       ↘
- Verify     Reject
-    ↓
+      ↙   ↘
+   Verify  Reject
+      ↓
 Verified Doctor
-    ↓
+      ↓
 Public Doctor Listing
 ```
 
-Only doctors with the appropriate verified status are displayed in the public doctor directory.
+Only doctors with the appropriate verification status are displayed in the public doctor directory.
+
+---
+
+# 📊 Admin Analytics
+
+The admin dashboard provides important platform-level statistics and doctor performance insights.
+
+### Dashboard Metrics
+
+| Metric                | Description                           |
+| --------------------- | ------------------------------------- |
+| 👤 Total Patients     | Number of registered patient accounts |
+| 🧑‍⚕️ Total Doctors   | Number of doctor profiles             |
+| 📅 Total Appointments | Number of appointment records         |
+| ⭐ Average Rating      | Average doctor rating                 |
+
+### Doctor Performance
+
+Administrators can view doctor performance through a visual rating chart.
+
+This provides an overview of doctor ratings and platform activity.
+
+---
+
+# 🔐 Authentication & Authorization
+
+Medi-Care uses **BetterAuth** for authentication, session management, and role-based authorization.
+
+### Authentication Methods
+
+* Email & Password
+* Google OAuth
+* Secure sessions
+* Protected routes
+* Role-based access control
+* Protected backend APIs
+
+### User Roles
+
+| Role      | Main Access                                        |
+| --------- | -------------------------------------------------- |
+| `patient` | Doctors, appointments, payments, patient dashboard |
+| `doctor`  | Doctor profile and doctor dashboard                |
+| `admin`   | Users, doctors, appointments, payments, analytics  |
+
+The application separates permissions according to user roles to protect sensitive functionality.
 
 ---
 
 # 🏗️ System Architecture
 
-Medi-Care uses a separated frontend and backend architecture.
+Medi-Care follows a separated frontend and backend architecture.
 
 ```text
-                    ┌──────────────────────┐
-                    │        Users         │
-                    │ Patient / Doctor /   │
-                    │        Admin         │
-                    └──────────┬───────────┘
-                               │
-                               ▼
-                    ┌──────────────────────┐
-                    │       Next.js        │
-                    │      Frontend        │
-                    └──────────┬───────────┘
-                               │
-                           REST API
-                               │
-                               ▼
-                    ┌──────────────────────┐
-                    │      Express.js      │
-                    │       Backend        │
-                    └───────┬──────┬───────┘
-                            │      │
-                ┌───────────┘      └────────────┐
-                ▼                               ▼
-       ┌─────────────────┐             ┌─────────────────┐
-       │     MongoDB     │             │     Stripe      │
-       │     Database    │             │    Payments     │
-       └─────────────────┘             └─────────────────┘
+                         ┌──────────────────┐
+                         │      Users       │
+                         │ Patient / Doctor │
+                         │      / Admin     │
+                         └────────┬─────────┘
+                                  │
+                                  ▼
+                         ┌──────────────────┐
+                         │     Next.js      │
+                         │    Frontend      │
+                         └────────┬─────────┘
+                                  │
+                              REST API
+                                  │
+                                  ▼
+                         ┌──────────────────┐
+                         │    Express.js    │
+                         │     Backend      │
+                         └───────┬───┬──────┘
+                                 │   │
+                    ┌────────────┘   └─────────────┐
+                    ▼                              ▼
+             ┌──────────────┐              ┌──────────────┐
+             │   MongoDB    │              │    Stripe    │
+             │   Database   │              │   Payments   │
+             └──────────────┘              └──────────────┘
 ```
 
 ---
 
-# 🧑‍💻 Tech Stack
-
-## Frontend
-
-| Technology          | Purpose                                 |
-| ------------------- | --------------------------------------- |
-| **Next.js**         | React framework and application routing |
-| **React.js**        | User interface                          |
-| **JavaScript**      | Application logic                       |
-| **Tailwind CSS**    | Styling and responsive design           |
-| **HeroUI**          | UI components                           |
-| **Recharts**        | Analytics and data visualization        |
-| **React Hook Form** | Form management                         |
-| **React Toastify**  | Notifications                           |
-
-## Backend
-
-| Technology     | Purpose                          |
-| -------------- | -------------------------------- |
-| **Node.js**    | Backend runtime                  |
-| **Express.js** | REST API                         |
-| **MongoDB**    | Database                         |
-| **BetterAuth** | Authentication and authorization |
-| **Stripe**     | Payment processing               |
-
-## Tools & Deployment
-
-* Git
-* GitHub
-* VS Code
-* Postman
-* Vercel
-* MongoDB
-
----
-
-# 📁 Project Modules
+# 🧩 Application Modules
 
 ```text
 Medi-Care
@@ -351,21 +331,21 @@ Medi-Care
 │   ├── Sessions
 │   └── Role-Based Access
 │
-├── Doctors
+├── Doctor Management
 │   ├── Doctor Listing
 │   ├── Search
-│   ├── Filters
+│   ├── Filtering
 │   ├── Pagination
 │   ├── Doctor Details
 │   └── Verification
 │
-├── Appointments
+├── Appointment Management
 │   ├── Booking
 │   ├── Rescheduling
 │   ├── Cancellation
 │   └── Status Management
 │
-├── Payments
+├── Payment Management
 │   ├── Stripe Checkout
 │   ├── Payment Records
 │   └── Payment Status
@@ -379,18 +359,54 @@ Medi-Care
 │   └── Doctor Management
 │
 └── Admin Dashboard
-    ├── Users
-    ├── Doctors
-    ├── Appointments
-    ├── Payments
+    ├── User Management
+    ├── Doctor Management
+    ├── Appointment Management
+    ├── Payment Management
     └── Analytics
 ```
 
 ---
 
+# 🛠️ Tech Stack
+
+## Frontend
+
+| Technology          | Purpose                                 |
+| ------------------- | --------------------------------------- |
+| **Next.js**         | React framework and application routing |
+| **React.js**        | User interface                          |
+| **JavaScript**      | Application development                 |
+| **Tailwind CSS**    | Styling and responsive design           |
+| **HeroUI**          | UI components                           |
+| **Recharts**        | Analytics and data visualization        |
+| **React Hook Form** | Form handling                           |
+| **React Toastify**  | Notifications                           |
+
+## Backend
+
+| Technology     | Purpose                        |
+| -------------- | ------------------------------ |
+| **Node.js**    | Backend runtime                |
+| **Express.js** | REST API                       |
+| **MongoDB**    | Database                       |
+| **BetterAuth** | Authentication & authorization |
+| **Stripe**     | Payment processing             |
+
+## Tools & Deployment
+
+* Git
+* GitHub
+* VS Code
+* Postman
+* Vercel
+* MongoDB
+
+---
+
 # 🎨 UI & UX
 
-The application follows a modern healthcare-focused visual design.
+Medi-Care follows a modern healthcare-focused visual design.
 
 ### Design Highlights
 
@@ -399,17 +415,17 @@ The application follows a modern healthcare-focused visual design.
 * 📱 Responsive layouts
 * 🧩 Reusable components
 * 🎯 Clear navigation
-* 📊 Data-focused dashboards
+* 📊 Professional dashboard design
 * 🪄 Smooth interactions
 * 🖥️ Desktop and mobile support
-* 👨‍⚕️ Professional healthcare presentation
 * 🔐 Clear authentication states
+* 🧑‍⚕️ Healthcare-focused visual language
 
 ---
 
-# 🔌 REST API Integration
+# 🔌 REST API
 
-The frontend communicates with the Express.js backend through REST APIs.
+The Next.js frontend communicates with the Express.js backend through REST APIs.
 
 ### Main API Areas
 
@@ -421,25 +437,26 @@ The frontend communicates with the Express.js backend through REST APIs.
 /api/admin/doctors
 ```
 
-The separated architecture keeps frontend presentation and backend business logic independent, making the application easier to maintain and extend.
+The separated API architecture keeps frontend presentation and backend business logic independent and easier to maintain.
 
 ---
 
 # 🔒 Security
 
-Medi-Care includes several security-focused practices:
+Security is an important part of the Medi-Care architecture.
 
-* Protected authentication routes
-* Role-based authorization
-* Protected dashboard access
-* Backend API validation
-* Secure authentication sessions
-* Doctor verification before public listing
-* Protected admin functionality
-* Environment variables for sensitive credentials
-* Stripe payment processing
+The application includes:
 
-> ⚠️ Never commit `.env`, API keys, database passwords, OAuth secrets, or Stripe secret keys to GitHub.
+* 🔐 Authentication
+* 🛡️ Role-based authorization
+* 🔒 Protected dashboard routes
+* 🔒 Protected backend APIs
+* ✅ Doctor verification
+* 🚫 Admin-only management functionality
+* 🔑 Environment-based secret configuration
+* 💳 Secure Stripe payment processing
+
+> **Important:** Never commit `.env` files, database passwords, API keys, OAuth secrets, Stripe secret keys, or other sensitive credentials to GitHub.
 
 ---
 
@@ -456,7 +473,7 @@ BETTER_AUTH_URL=http://localhost:3000
 MONGODB_URI=your_mongodb_uri
 DB_NAME=mediCareDB
 
-NEXT_PUBLIC_IMGBB_API_KEY=your_imgbb_key
+NEXT_PUBLIC_IMGBB_API_KEY=your_imgbb_api_key
 
 NEXT_PUBLIC_BASE_URL=http://localhost:3000
 NEXT_PUBLIC_SERVER_URL=http://localhost:5000
@@ -477,11 +494,11 @@ MONGODB_URI=your_mongodb_uri
 CLIENT_URI=http://localhost:3000
 ```
 
-For production, replace the localhost URLs with your deployed frontend and backend URLs.
+For production deployment, replace localhost URLs with the appropriate deployed frontend and backend URLs.
 
 ---
 
-# 🛠️ Installation
+# 🚀 Installation & Setup
 
 ## 1. Clone the Repository
 
@@ -498,7 +515,14 @@ npm install
 
 ## 3. Configure Environment Variables
 
-Create the required `.env.local` and `.env` files and add your credentials.
+Create the required environment files:
+
+```text
+Frontend → .env.local
+Backend  → .env
+```
+
+Add your MongoDB, BetterAuth, Google OAuth, Stripe, and other required credentials.
 
 ## 4. Start the Frontend
 
@@ -506,7 +530,7 @@ Create the required `.env.local` and `.env` files and add your credentials.
 npm run dev
 ```
 
-The frontend will normally run at:
+Frontend:
 
 ```text
 http://localhost:3000
@@ -520,7 +544,7 @@ Navigate to the backend project and run:
 npm run dev
 ```
 
-The backend will normally run at:
+Backend:
 
 ```text
 http://localhost:5000
@@ -528,9 +552,30 @@ http://localhost:5000
 
 ---
 
+# 📁 Recommended Repository Structure
+
+```text
+Medi-Care/
+│
+├── README.md
+├── screenshots/
+│   ├── homepage.png
+│   └── admin-dashboard.png
+│
+├── app/
+├── components/
+├── lib/
+├── public/
+│
+├── package.json
+└── ...
+```
+
+---
+
 # 📈 Future Improvements
 
-Potential future improvements include:
+Potential improvements for future versions include:
 
 * 💬 Doctor-patient messaging
 * 🔔 Real-time appointment notifications
@@ -547,7 +592,7 @@ Potential future improvements include:
 
 # 🎯 Project Goals
 
-Medi-Care was built to demonstrate practical full-stack development skills including:
+Medi-Care was developed to demonstrate practical full-stack development skills including:
 
 * Modern Next.js development
 * React development
@@ -563,30 +608,31 @@ Medi-Care was built to demonstrate practical full-stack development skills inclu
 
 ---
 
-# 👨‍💻 Developer
-
-## Abdus Sami Rahat
-
-**Frontend / Full-Stack Web Developer**
-
-* 🐙 GitHub: [@asrahat](https://github.com/asrahat)
-* 💼 LinkedIn: [Abdus Sami Rahat](https://www.linkedin.com/in/abdus-sami-rahat/)
-* 🌐 Portfolio: [myself-theta-five.vercel.app](https://myself-theta-five.vercel.app/)
-
----
-
 # 🌐 Live Website
 
 🚀 **https://medi-care-kappa-ten.vercel.app/**
 
 ---
 
-# ⭐ Support
+# 👨‍💻 Developer
 
-If you find this project useful or interesting, consider giving the repository a ⭐ on GitHub.
+## Abdus Sami Rahat
+
+**Frontend / Full-Stack Web Developer**
+
+* 🐙 **GitHub:** [@asrahat](https://github.com/asrahat)
+* 💼 **LinkedIn:** [Abdus Sami Rahat](https://www.linkedin.com/in/abdus-sami-rahat/)
+* 🌐 **Portfolio:** [myself-theta-five.vercel.app](https://myself-theta-five.vercel.app/)
 
 ---
 
-**Built with ❤️ by Abdus Sami Rahat**
+# ⭐ Support
+
+If you find this project useful or interesting, consider giving the repository a ⭐.
+
+---
+
+### Built with ❤️ by Abdus Sami Rahat
 
 ````
+
