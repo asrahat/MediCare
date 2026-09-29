@@ -1,3 +1,4 @@
+
 import DoctorListingContainer from "@/components/doctors/DoctorListingContainer";
 import { getDoctors } from "@/lib/api/doctors";
 
@@ -25,8 +26,9 @@ const DoctorsPage = async ({ searchParams }) => {
     cleanFilters
   ).toString();
 
-  const { doctors, total, page, perPage } =
-    await getDoctors(queryString);
+  console.log("DOCTORS PAGE QUERY:", queryString);
+
+  const result = await getDoctors(queryString);
 
   return (
     <div className="min-h-screen w-full bg-zinc-950 px-5 py-10 text-white sm:px-8 md:py-12 lg:px-12 xl:px-16 2xl:px-20">
@@ -43,10 +45,10 @@ const DoctorsPage = async ({ searchParams }) => {
       <div className="w-full">
         <DoctorListingContainer
           filters={cleanFilters}
-          doctors={doctors || []}
-          total={total || 0}
-          page={page || 1}
-          perPage={perPage || 8}
+          doctors={result.doctors}
+          total={result.total}
+          page={result.page}
+          perPage={result.perPage}
         />
       </div>
     </div>
@@ -54,3 +56,4 @@ const DoctorsPage = async ({ searchParams }) => {
 };
 
 export default DoctorsPage;
+

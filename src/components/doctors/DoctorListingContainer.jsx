@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import DoctorCard from "./DoctorCard";
 import DoctorFilters from "./DoctorFilters";
@@ -23,15 +23,24 @@ export default function DoctorListingContainer({
   );
   const [currentPage, setCurrentPage] = useState(Number(page) || 1);
 
+  const isFirstRender = useRef(true);
+
   const itemsPerPage = Number(perPage) || 8;
   const totalDoctors = Number(total) || 0;
   const totalPages = Math.ceil(totalDoctors / itemsPerPage);
 
+  // Keep page state synchronized with URL
   useEffect(() => {
     setCurrentPage(Number(page) || 1);
   }, [page]);
 
+  // Update URL only after the initial render
   useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+
     const sp = new URLSearchParams();
 
     if (searchQuery) {
