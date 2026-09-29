@@ -1,4 +1,4 @@
-````md
+
 # 🏥 Medi-Care
 
 ### Modern Full-Stack Healthcare Management Platform
@@ -634,5 +634,5 @@ If you find this project useful or interesting, consider giving the repository a
 
 ### Built with ❤️ by Abdus Sami Rahat
 
-````
+
 
